@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <script>
+    var ws = new WebSocket("ws://localhost:8080/notifications");
+    ws.onopen = function() {
+        console.log("ws open");
+    }
+    ws.onmessage = function(event) {
+        console.log(event.data);
+    }
+    ws.onclose = function() {
+        console.log("ws close");
+    }
+    </script>
+</body>
+</html>
