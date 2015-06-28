@@ -52,5 +52,8 @@ virtualenv env
 pip install -r requirements.txt
 python nserv.py
 
-# open http://localhost:8080/index.html
+# in other console (add host and port if needed):
+redis-server
+
+# open http://localhost:8080/
 ```

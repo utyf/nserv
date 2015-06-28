@@ -71,7 +71,10 @@ def main():
     app = Application(
         [
             url(r'/notifications', NotificationHandler),
-            url(r'/(.*)', StaticFileHandler, dict(path=static_path)),
+            url(r'/(.*)', StaticFileHandler, dict(
+                path=static_path,
+                default_filename='index.html'
+            )),
         ],
     )
 
