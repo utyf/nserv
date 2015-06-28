@@ -1,5 +1,5 @@
 While developing this testing assignment I tried to keep everything 
-as simple and light as possible.
+as simple and light as possible. Result was tested with Python 2.7 only.
 
 
 ###Back-end
@@ -40,3 +40,17 @@ State is strictly separated from logic, every state transition is a pure functio
 Following technologies are used:
 * __React.js__ as library for visual components
 * __Bootstrap__ as CSS framework
+
+###Install and start
+```bash
+git clone https://github.com/utyf/nserv
+cd nserv
+
+# assuming, that python 2.7 is there
+virtualenv env
+. env/bin/activate
+pip install -r requirements.txt
+python nserv.py
+
+# open http://localhost:8080/index.html
+```
