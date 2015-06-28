@@ -12,7 +12,9 @@ def parse_args():
        description='Post a notification.'
     )
     parser.add_argument('-m', '--message', required=True)
-    parser.add_argument('-l', '--level', required=True)
+    parser.add_argument('-l', '--level',
+                        choices=['success', 'info', 'warning', 'danger'],
+                        required=True)
     args = parser.parse_args()
     return args
 
