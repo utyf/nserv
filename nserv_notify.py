@@ -3,20 +3,8 @@
 Command-line tool for posting notifications
 """
 import argparse
-import json
 
-from nserv import redis, config
-
-
-def notify(text, level):
-    # publish notification synchroniously (blocking)
-    redis.to_blocking_client().publish(
-        config.get('redis', 'channel'),
-        json.dumps(dict(
-            text=text,
-            level=level
-        ))
-    )
+from nserv import notify
 
 
 def parse_args():

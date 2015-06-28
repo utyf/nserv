@@ -1,3 +1,4 @@
+import json
 import os.path
 from ConfigParser import ConfigParser
 
@@ -43,6 +44,17 @@ class NotificationHandler(WebSocketHandler):
         Always pass cross-origin check
         """
         return True
+
+
+def notify(text, level):
+    # publish notification synchroniously (blocking)
+    redis.to_blocking_client().publish(
+        config.get('redis', 'channel'),
+        json.dumps(dict(
+            text=text,
+            level=level
+        ))
+    )
 
 
 def main():
