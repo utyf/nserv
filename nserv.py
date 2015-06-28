@@ -1,5 +1,6 @@
 import json
 import os.path
+import logging
 from ConfigParser import ConfigParser
 
 from gredis.client import AsyncRedis
@@ -14,6 +15,7 @@ from tornado.web import (
 
 config = ConfigParser()
 config.read('nserv.ini')
+logging.basicConfig(level=config.get('logging', 'level'))
 
 redis = AsyncRedis(
     config.get('redis', 'host'),
@@ -27,6 +29,7 @@ class NotificationHandler(WebSocketHandler):
     """
     @gen.coroutine
     def open(self):
+        logging.debug('Client connected to NotificationHandler')
         pubsub = redis.pubsub()
         yield pubsub.subscribe(config.get('redis' , 'channel'))
 
@@ -34,6 +37,7 @@ class NotificationHandler(WebSocketHandler):
             message = yield pubsub.get_message(True)
             if message['type'] == 'message':
                 try:
+                    logging.debug('Notification {0} was sent'.format(message['data']))
                     self.write_message(message['data'])
                 except WebSocketClosedError:
                     return
@@ -72,6 +76,9 @@ def main():
     )
 
     app.listen(config.get('web', 'port'))
+    logging.info('Starting notification server on port {0}'.format(
+        config.get('web', 'port')
+    ))
     IOLoop.current().start()
 
 
